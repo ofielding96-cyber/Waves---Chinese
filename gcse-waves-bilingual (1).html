@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSE Waves Physics 波 | AQA Foundation</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080f;
+    --surface: rgba(10,18,35,0.9);
+    --wave-blue: #38bdf8;
+    --wave-teal: #2dd4bf;
+    --em-gold: #fbbf24;
+    --em-violet: #c084fc;
+    --danger-red: #f87171;
+    --safe-green: #4ade80;
+    --border: rgba(56,189,248,0.25);
+    --text: #e2eaf8;
+    --muted: rgba(226,234,248,0.5);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated wave background */
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(ellipse at 15% 40%, rgba(56,189,248,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 70%, rgba(45,212,191,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 10%, rgba(192,132,252,0.05) 0%, transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* Subtle wave line decoration */
+  body::after {
+    content:'';
+    position:fixed;
+    bottom:0; left:0; right:0;
+    height:200px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 200'%3E%3Cpath fill='none' stroke='rgba(56,189,248,0.07)' stroke-width='2' d='M0,100 C180,20 360,180 540,100 C720,20 900,180 1080,100 C1260,20 1440,180 1440,100'/%3E%3Cpath fill='none' stroke='rgba(45,212,191,0.05)' stroke-width='2' d='M0,130 C180,50 360,210 540,130 C720,50 900,210 1080,130 C1260,50 1440,210 1440,130'/%3E%3C/svg%3E") repeat-x bottom;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .container {
+    position:relative; z-index:1;
+    max-width:1100px; margin:0 auto;
+    padding:0 20px 80px;
+  }
+
+  /* ── HEADER ── */
+  header { text-align:center; padding:50px 20px 35px; }
+
+  .header-badge {
+    display:inline-block;
+    background:rgba(56,189,248,0.1);
+    border:1px solid var(--wave-blue);
+    color:var(--wave-blue);
+    font-family:'Space Mono',monospace;
+    font-size:0.68rem; letter-spacing:3px;
+    padding:5px 16px; border-radius:20px;
+    margin-bottom:18px; text-transform:uppercase;
+  }
+
+  h1 {
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(2rem,5vw,3.2rem);
+    font-weight:900;
+    background:linear-gradient(135deg, var(--wave-blue), var(--wave-teal), var(--em-violet));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text;
+    line-height:1.1; margin-bottom:10px;
+  }
+
+  .subtitle-cn { font-size:1.5rem; color:rgba(226,234,248,0.55); font-weight:300; letter-spacing:5px; margin-bottom:6px; }
+  .subtitle-en { font-family:'Space Mono',monospace; font-size:0.75rem; color:rgba(226,234,248,0.35); letter-spacing:2px; }
+
+  /* ── NAV ── */
+  .nav-tabs {
+    display:flex; gap:8px; justify-content:center;
+    flex-wrap:wrap; margin:28px 0;
+  }
+
+  .tab-btn {
+    background:rgba(10,18,35,0.8);
+    border:1px solid var(--border);
+    color:var(--muted);
+    padding:10px 18px; border-radius:30px;
+    cursor:pointer; font-family:'Noto Sans SC',sans-serif;
+    font-size:0.82rem; transition:all 0.3s; white-space:nowrap;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background:rgba(56,189,248,0.12);
+    border-color:var(--wave-blue); color:var(--wave-blue);
+    box-shadow:0 0 18px rgba(56,189,248,0.18);
+  }
+  .tab-btn .cn { display:block; font-size:0.68rem; opacity:0.65; margin-top:2px; }
+
+  /* ── SECTIONS ── */
+  .section { display:none; animation:fadeIn 0.35s ease; }
+  .section.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  .section-title {
+    font-family:'Orbitron',sans-serif; font-size:1.2rem;
+    color:var(--wave-blue); margin-bottom:5px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .section-title::before {
+    content:''; width:4px; height:22px;
+    background:var(--wave-blue); border-radius:2px; display:inline-block;
+  }
+  .section-cn { color:var(--muted); font-size:0.88rem; margin-bottom:22px; padding-left:14px; }
+
+  /* ── CARDS ── */
+  .cards-grid {
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(295px,1fr));
+    gap:14px; margin-top:18px;
+  }
+
+  .concept-card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px; padding:18px;
+    cursor:pointer; transition:all 0.3s;
+    position:relative; overflow:hidden;
+  }
+  .concept-card::before {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg,transparent 65%,rgba(56,189,248,0.04));
+    pointer-events:none;
+  }
+  .concept-card:hover { border-color:var(--wave-blue); box-shadow:0 0 24px rgba(56,189,248,0.13); transform:translateY(-2px); }
+  .concept-card.expanded { border-color:var(--em-gold); box-shadow:0 0 24px rgba(251,191,36,0.12); }
+
+  .card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .card-icon { font-size:1.7rem; line-height:1; }
+  .card-terms { flex:1; }
+  .term-en { font-family:'Space Mono',monospace; font-size:0.9rem; color:var(--em-gold); font-weight:700; }
+  .term-cn { font-size:1.05rem; color:var(--text); margin-top:3px; }
+  .term-pinyin { font-size:0.72rem; color:var(--muted); font-style:italic; margin-top:1px; }
+  .expand-arrow { color:var(--muted); font-size:0.75rem; transition:transform 0.3s; margin-top:4px; }
+  .concept-card.expanded .expand-arrow { transform:rotate(180deg); }
+
+  .card-body {
+    display:none; margin-top:14px; padding-top:14px;
+    border-top:1px solid rgba(56,189,248,0.12);
+  }
+  .concept-card.expanded .card-body { display:block; }
+
+  .def-en { font-size:0.83rem; color:rgba(226,234,248,0.8); line-height:1.6; margin-bottom:9px; }
+  .def-cn {
+    font-size:0.83rem; color:rgba(56,189,248,0.85); line-height:1.7;
+    background:rgba(56,189,248,0.05); padding:8px 12px;
+    border-radius:6px; border-left:2px solid var(--wave-blue);
+  }
+  .key-fact { margin-top:9px; font-size:0.76rem; color:var(--em-gold); font-family:'Space Mono',monospace; }
+
+  /* ── WAVE DIAGRAM (SVG interactive) ── */
+  .diagram-box {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px; padding:28px;
+    margin-top:18px;
+  }
+  .diagram-title { font-family:'Orbitron',sans-serif; font-size:0.95rem; color:var(--em-gold); margin-bottom:4px; }
+  .diagram-subtitle { font-size:0.82rem; color:var(--muted); margin-bottom:20px; }
+
+  .wave-svg-wrap { width:100%; overflow-x:auto; }
+
+  .wave-label-row {
+    display:flex; justify-content:space-around; flex-wrap:wrap;
+    gap:10px; margin-top:18px;
+  }
+  .wave-label-pill {
+    background:rgba(56,189,248,0.08);
+    border:1px solid rgba(56,189,248,0.25);
+    border-radius:20px; padding:7px 16px;
+    font-size:0.8rem; text-align:center; cursor:pointer;
+    transition:all 0.3s;
+  }
+  .wave-label-pill:hover, .wave-label-pill.active {
+    background:rgba(56,189,248,0.18); border-color:var(--wave-blue); color:var(--wave-blue);
+  }
+  .wave-label-pill .cn { font-size:0.7rem; color:var(--muted); display:block; margin-top:2px; }
+
+  .wave-info-box {
+    margin-top:16px; padding:14px 18px;
+    background:rgba(56,189,248,0.06);
+    border:1px solid rgba(56,189,248,0.2);
+    border-radius:10px; display:none;
+    animation:fadeIn 0.25s ease;
+  }
+  .wave-info-box.show { display:block; }
+  .wi-term { font-family:'Space Mono',monospace; font-size:0.85rem; color:var(--em-gold); margin-bottom:2px; }
+  .wi-cn { font-size:1rem; color:var(--text); margin-bottom:8px; }
+  .wi-def { font-size:0.83rem; color:rgba(226,234,248,0.8); line-height:1.6; margin-bottom:7px; }
+  .wi-def-cn { font-size:0.83rem; color:rgba(56,189,248,0.75); line-height:1.7; }
+
+  /* ── EM SPECTRUM ── */
+  .em-spectrum-bar {
+    display:flex; border-radius:10px; overflow:hidden;
+    margin:18px 0; height:52px; cursor:pointer;
+  }
+  .em-seg {
+    flex:1; display:flex; align-items:center; justify-content:center;
+    font-size:0.62rem; font-family:'Space Mono',monospace;
+    transition:flex 0.4s, filter 0.3s;
+    text-align:center; padding:4px 2px; line-height:1.3;
+    color:rgba(0,0,0,0.75); font-weight:700;
+    cursor:pointer; position:relative;
+  }
+  .em-seg:hover, .em-seg.active { flex:2.5; filter:brightness(1.15); }
+  .em-seg .seg-label { pointer-events:none; }
+
+  .em-info-panel {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px; padding:20px;
+    margin-top:4px; display:none;
+    animation:fadeIn 0.25s ease;
+  }
+  .em-info-panel.show { display:block; }
+
+  .em-info-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:12px; margin-top:12px;
+  }
+  .em-info-cell {
+    background:rgba(56,189,248,0.05);
+    border:1px solid rgba(56,189,248,0.15);
+    border-radius:8px; padding:11px 14px; font-size:0.82rem;
+  }
+  .em-info-cell-title { font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--wave-blue); margin-bottom:5px; letter-spacing:1px; }
+
+  /* ── EQUATIONS ── */
+  .eq-card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px; padding:22px 26px; margin-bottom:14px;
+  }
+  .eq-name { font-size:1rem; color:var(--text); margin-bottom:3px; }
+  .eq-name-cn { font-size:0.83rem; color:var(--muted); margin-bottom:12px; }
+  .eq-formula {
+    font-family:'Space Mono',monospace; font-size:1.4rem;
+    color:var(--em-gold); text-align:center; padding:16px;
+    background:rgba(251,191,36,0.06); border-radius:8px;
+    margin:12px 0; letter-spacing:1px;
+  }
+  .eq-badge {
+    display:inline-block; font-size:0.68rem; font-family:'Space Mono',monospace;
+    padding:2px 8px; border-radius:10px; margin-left:8px; vertical-align:middle;
+  }
+  .eq-badge.recall { background:rgba(248,113,113,0.15); border:1px solid rgba(248,113,113,0.4); color:var(--danger-red); }
+  .eq-badge.given { background:rgba(74,222,128,0.12); border:1px solid rgba(74,222,128,0.3); color:var(--safe-green); }
+  .eq-vars { font-size:0.82rem; color:rgba(226,234,248,0.7); line-height:1.9; }
+  .eq-vars span { color:var(--wave-blue); font-family:'Space Mono',monospace; }
+
+  /* worked example */
+  .worked-ex {
+    margin-top:14px; padding:14px 16px;
+    background:rgba(45,212,191,0.06);
+    border:1px solid rgba(45,212,191,0.2); border-radius:8px;
+  }
+  .we-title { font-size:0.72rem; font-family:'Space Mono',monospace; color:var(--wave-teal); letter-spacing:1px; margin-bottom:8px; }
+  .we-body { font-size:0.82rem; color:rgba(226,234,248,0.8); line-height:1.8; }
+  .we-body .step { color:var(--wave-teal); font-family:'Space Mono',monospace; }
+  .we-cn { font-size:0.8rem; color:rgba(45,212,191,0.65); margin-top:6px; line-height:1.7; }
+
+  /* ── GLOSSARY ── */
+  .search-box {
+    width:100%; padding:11px 20px;
+    background:rgba(10,18,35,0.8);
+    border:1px solid var(--border); border-radius:30px;
+    color:var(--text); font-family:'Noto Sans SC',sans-serif;
+    font-size:0.88rem; outline:none; margin-bottom:18px; transition:border-color 0.3s;
+  }
+  .search-box:focus { border-color:var(--wave-blue); }
+  .search-box::placeholder { color:rgba(226,234,248,0.3); }
+
+  .glossary-table { width:100%; border-collapse:collapse; margin-top:6px; }
+  .glossary-table th {
+    font-family:'Space Mono',monospace; font-size:0.72rem;
+    color:var(--wave-blue); text-align:left; padding:11px 14px;
+    border-bottom:1px solid rgba(56,189,248,0.18);
+    letter-spacing:1px; text-transform:uppercase;
+  }
+  .glossary-table td { padding:11px 14px; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:top; }
+  .glossary-table tr:hover td { background:rgba(56,189,248,0.04); }
+  .gl-en { font-family:'Space Mono',monospace; font-size:0.82rem; color:var(--em-gold); }
+  .gl-cn { font-size:0.95rem; color:var(--text); margin:2px 0; }
+  .gl-py { font-size:0.72rem; color:var(--muted); font-style:italic; }
+  .gl-def { font-size:0.8rem; color:rgba(226,234,248,0.7); line-height:1.5; }
+  .gl-def-cn { font-size:0.8rem; color:rgba(56,189,248,0.65); line-height:1.6; }
+
+  /* ── QUIZ ── */
+  .quiz-container {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; padding:28px; margin-top:18px;
+  }
+  .quiz-progress { display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; }
+  .progress-bar { flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:2px; margin:0 14px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--wave-blue),var(--em-violet)); border-radius:2px; transition:width 0.5s ease; }
+  .progress-text { font-family:'Space Mono',monospace; font-size:0.78rem; color:var(--muted); }
+  .score-display { font-family:'Orbitron',sans-serif; font-size:0.88rem; color:var(--em-gold); }
+  .question-box { text-align:center; margin-bottom:22px; }
+  .question-text { font-size:1.1rem; line-height:1.6; color:var(--text); margin-bottom:6px; }
+  .question-cn { font-size:0.88rem; color:rgba(56,189,248,0.6); }
+  .options-grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; margin-bottom:18px; }
+  .option-btn {
+    background:rgba(10,18,35,0.8); border:1px solid rgba(226,234,248,0.13);
+    color:var(--text); padding:13px 14px; border-radius:10px;
+    cursor:pointer; font-family:'Noto Sans SC',sans-serif;
+    font-size:0.83rem; text-align:left; transition:all 0.3s; line-height:1.5;
+  }
+  .option-btn:hover:not(:disabled) { border-color:var(--wave-blue); background:rgba(56,189,248,0.07); }
+  .option-btn.correct { border-color:var(--safe-green); background:rgba(74,222,128,0.08); color:var(--safe-green); }
+  .option-btn.wrong { border-color:var(--danger-red); background:rgba(248,113,113,0.08); color:var(--danger-red); }
+  .option-cn { display:block; font-size:0.72rem; opacity:0.6; margin-top:2px; }
+  .feedback-box { padding:13px 18px; border-radius:9px; font-size:0.88rem; line-height:1.6; display:none; margin-bottom:13px; }
+  .feedback-box.show { display:block; }
+  .feedback-box.correct { background:rgba(74,222,128,0.08); border:1px solid var(--safe-green); color:var(--safe-green); }
+  .feedback-box.wrong { background:rgba(248,113,113,0.08); border:1px solid var(--danger-red); color:var(--danger-red); }
+  .next-btn {
+    display:none; width:100%; padding:13px;
+    background:linear-gradient(135deg,var(--wave-blue),var(--em-violet));
+    border:none; border-radius:10px; color:white;
+    font-family:'Orbitron',sans-serif; font-size:0.88rem;
+    cursor:pointer; transition:all 0.3s;
+  }
+  .next-btn.show { display:block; }
+  .next-btn:hover { opacity:0.9; transform:translateY(-1px); box-shadow:0 5px 18px rgba(56,189,248,0.28); }
+  .quiz-result { text-align:center; padding:28px; display:none; }
+  .quiz-result.show { display:block; }
+  .result-score {
+    font-family:'Orbitron',sans-serif; font-size:2.8rem;
+    background:linear-gradient(135deg,var(--em-gold),var(--em-violet));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:10px;
+  }
+  .result-msg { font-size:1.05rem; margin-bottom:4px; }
+  .result-cn { font-size:0.88rem; color:var(--muted); margin-bottom:22px; }
+  .restart-btn {
+    padding:11px 28px; background:transparent;
+    border:1px solid var(--wave-blue); color:var(--wave-blue);
+    border-radius:30px; cursor:pointer;
+    font-family:'Space Mono',monospace; font-size:0.83rem; transition:all 0.3s;
+  }
+  .restart-btn:hover { background:rgba(56,189,248,0.1); }
+
+  @media(max-width:600px){
+    .options-grid{grid-template-columns:1fr;}
+    .em-info-grid{grid-template-columns:1fr;}
+    .cards-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-badge">GCSE Physics · Year 11 · AQA 4.6 · Foundation</div>
+    <h1>WAVES PHYSICS</h1>
+    <div class="subtitle-cn">波的物理学</div>
+    <div class="subtitle-en">Interactive Bilingual Revision Resource · 互动双语复习资源</div>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab(event,'concepts')">Key Concepts<span class="cn">核心概念</span></button>
+    <button class="tab-btn" onclick="showTab(event,'wavediagram')">Wave Diagram<span class="cn">波形图</span></button>
+    <button class="tab-btn" onclick="showTab(event,'em')">EM Spectrum<span class="cn">电磁波谱</span></button>
+    <button class="tab-btn" onclick="showTab(event,'equations')">Equations<span class="cn">公式</span></button>
+    <button class="tab-btn" onclick="showTab(event,'glossary')">Glossary<span class="cn">词汇表</span></button>
+    <button class="tab-btn" onclick="showTab(event,'quiz')">Quiz<span class="cn">测验</span></button>
+  </nav>
+
+  <!-- ══════════ CONCEPTS ══════════ -->
+  <div class="section active" id="section-concepts">
+    <div class="section-title">Key Concepts</div>
+    <div class="section-cn">核心概念 — Click each card to expand · 点击卡片展开详情</div>
+    <div class="cards-grid">
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">〰️</div>
+          <div class="card-terms">
+            <div class="term-en">Transverse Wave</div>
+            <div class="term-cn">横波</div>
+            <div class="term-pinyin">héng bō</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A wave where the oscillations (vibrations) are <strong>perpendicular (at 90°)</strong> to the direction of energy transfer. Examples: light, all EM waves, ripples on water.</div>
+          <div class="def-cn">振动方向与能量传播方向<strong>垂直（成90°）</strong>的波。例子：光、所有电磁波、水面波纹。</div>
+          <div class="key-fact">★ Think: rope wave — shake up/down, energy travels forward</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🔊</div>
+          <div class="card-terms">
+            <div class="term-en">Longitudinal Wave</div>
+            <div class="term-cn">纵波</div>
+            <div class="term-pinyin">zòng bō</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A wave where the oscillations are <strong>parallel</strong> to the direction of energy transfer. Creates areas of <strong>compression</strong> (squashed) and <strong>rarefaction</strong> (stretched). Example: sound waves in air.</div>
+          <div class="def-cn">振动方向与能量传播方向<strong>平行</strong>的波。产生<strong>压缩区</strong>（密集）和<strong>稀疏区</strong>（稀疏）。例子：空气中的声波。</div>
+          <div class="key-fact">★ Think: slinky spring pushed back and forth — compressions travel along it</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">📏</div>
+          <div class="card-terms">
+            <div class="term-en">Amplitude</div>
+            <div class="term-cn">振幅</div>
+            <div class="term-pinyin">zhèn fú</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">The <strong>maximum displacement</strong> of a point on a wave from its undisturbed (rest) position. A larger amplitude means the wave carries more energy. Measured in metres (m).</div>
+          <div class="def-cn">波上某点从其未受扰动（静止）位置的<strong>最大位移</strong>。振幅越大，波携带的能量越多。单位为米（m）。</div>
+          <div class="key-fact">★ Louder sound = bigger amplitude · Brighter light = bigger amplitude</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">↔️</div>
+          <div class="card-terms">
+            <div class="term-en">Wavelength</div>
+            <div class="term-cn">波长</div>
+            <div class="term-pinyin">bō cháng</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">The distance from a point on one wave to the <strong>equivalent point on the next wave</strong> (e.g. crest to crest, or trough to trough). Symbol: <strong>λ</strong> (lambda). Measured in metres (m).</div>
+          <div class="def-cn">从一个波上某点到<strong>相邻波上对应点</strong>的距离（如波峰到波峰，或波谷到波谷）。符号：<strong>λ</strong>（拉姆达）。单位为米（m）。</div>
+          <div class="key-fact">★ Symbol: λ (Greek letter lambda 希腊字母)</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🔁</div>
+          <div class="card-terms">
+            <div class="term-en">Frequency</div>
+            <div class="term-cn">频率</div>
+            <div class="term-pinyin">pín lǜ</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">The number of <strong>complete waves passing a point per second</strong>. Measured in Hertz (Hz). A higher frequency means more waves per second — and a shorter wavelength.</div>
+          <div class="def-cn">每秒通过某点的<strong>完整波的数量</strong>。单位为赫兹（Hz）。频率越高，每秒的波数越多——波长越短。</div>
+          <div class="key-fact">★ 1 Hz = 1 wave per second 每秒1个波 · Higher f = shorter λ</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">⏱️</div>
+          <div class="card-terms">
+            <div class="term-en">Period</div>
+            <div class="term-cn">周期</div>
+            <div class="term-pinyin">zhōu qī</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">The time taken for <strong>one complete wave</strong> to pass a point. Symbol: <strong>T</strong>. Measured in seconds (s). Period and frequency are inversely related: <strong>T = 1/f</strong>.</div>
+          <div class="def-cn"><strong>一个完整的波</strong>通过某点所需的时间。符号：<strong>T</strong>。单位为秒（s）。周期与频率成反比：<strong>T = 1/f</strong>。</div>
+          <div class="key-fact">★ Higher frequency = shorter period · T = 1/f is on the equation sheet</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">↗️</div>
+          <div class="card-terms">
+            <div class="term-en">Wave Speed</div>
+            <div class="term-cn">波速</div>
+            <div class="term-pinyin">bō sù</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">The speed at which <strong>energy is transferred</strong> through a medium by the wave. All EM waves travel at <strong>3 × 10⁸ m/s</strong> in a vacuum. Calculated using: <strong>v = f × λ</strong></div>
+          <div class="def-cn">波通过介质传递<strong>能量的速度</strong>。所有电磁波在真空中的速度为<strong>3×10⁸ m/s</strong>。计算公式：<strong>v = f × λ</strong></div>
+          <div class="key-fact">★ Speed of light in vacuum: 300,000,000 m/s = 3 × 10⁸ m/s</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🪞</div>
+          <div class="card-terms">
+            <div class="term-en">Reflection</div>
+            <div class="term-cn">反射</div>
+            <div class="term-pinyin">fǎn shè</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">When a wave <strong>bounces back</strong> at a boundary between two materials. The angle of incidence = angle of reflection (measured from the normal). Waves can also be <strong>absorbed</strong> or <strong>transmitted</strong> at a boundary.</div>
+          <div class="def-cn">波在两种材料的交界处<strong>反弹</strong>。入射角等于反射角（从法线量起）。波也可以在边界处被<strong>吸收</strong>或<strong>透射</strong>。</div>
+          <div class="key-fact">★ Angle of incidence = angle of reflection 入射角 = 反射角</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">💡</div>
+          <div class="card-terms">
+            <div class="term-en">Electromagnetic Waves</div>
+            <div class="term-cn">电磁波</div>
+            <div class="term-pinyin">diàn cí bō</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en"><strong>Transverse waves</strong> that transfer energy and can travel through a vacuum. They all travel at <strong>3 × 10⁸ m/s</strong> in a vacuum. They form a continuous spectrum of 7 groups ordered by wavelength/frequency.</div>
+          <div class="def-cn"><strong>横波</strong>，能传递能量，可在真空中传播。在真空中均以<strong>3×10⁸ m/s</strong>的速度传播。它们构成连续的电磁波谱，按波长/频率分为7组。</div>
+          <div class="key-fact">★ All EM waves travel at the same speed in a vacuum 在真空中速度相同</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🌊</div>
+          <div class="card-terms">
+            <div class="term-en">Compression &amp; Rarefaction</div>
+            <div class="term-cn">压缩与稀疏</div>
+            <div class="term-pinyin">yā suō yǔ xī shū</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">Features of <strong>longitudinal waves</strong>. A <strong>compression</strong> is a region where particles are pushed together (high pressure). A <strong>rarefaction</strong> is a region where particles are spread apart (low pressure).</div>
+          <div class="def-cn"><strong>纵波</strong>的特征。<strong>压缩区</strong>是粒子被压缩在一起的区域（高压）。<strong>稀疏区</strong>是粒子分散开来的区域（低压）。</div>
+          <div class="key-fact">★ Sound in air: alternating compressions and rarefactions 交替出现的压缩和稀疏</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ WAVE DIAGRAM ══════════ -->
+  <div class="section" id="section-wavediagram">
+    <div class="section-title">Wave Diagram Interactive</div>
+    <div class="section-cn">波形图互动 — Click a label to learn about each wave property · 点击标签了解每个波的属性</div>
+
+    <div class="diagram-box">
+      <div class="diagram-title">Transverse Wave — 横波</div>
+      <div class="diagram-subtitle">The wave properties you need to identify from diagrams · 你需要从图中识别的波的属性</div>
+
+      <div class="wave-svg-wrap">
+        <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:400px;height:auto;display:block;">
+          <!-- rest line -->
+          <line x1="30" y1="100" x2="670" y2="100" stroke="rgba(226,234,248,0.15)" stroke-width="1" stroke-dasharray="6,4"/>
+          <!-- wave path -->
+          <path d="M30,100 C72,20 113,20 155,100 C197,180 238,180 280,100 C322,20 363,20 405,100 C447,180 488,180 530,100 C572,20 613,20 655,100"
+                fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+
+          <!-- AMPLITUDE arrows -->
+          <line x1="155" y1="100" x2="155" y2="20" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowGold)" marker-start="url(#arrowGoldR)"/>
+          <text x="162" y="63" fill="#fbbf24" font-size="11" font-family="Space Mono">A</text>
+
+          <!-- WAVELENGTH arrow -->
+          <line x1="155" y1="175" x2="405" y2="175" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arrowGreen)" marker-start="url(#arrowGreenR)"/>
+          <line x1="155" y1="168" x2="155" y2="182" stroke="#4ade80" stroke-width="1.5"/>
+          <line x1="405" y1="168" x2="405" y2="182" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="258" y="192" fill="#4ade80" font-size="11" font-family="Space Mono" text-anchor="middle">λ (wavelength)</text>
+
+          <!-- CREST label -->
+          <circle cx="155" cy="20" r="4" fill="#c084fc"/>
+          <text x="165" y="20" fill="#c084fc" font-size="11" font-family="Space Mono">Crest 波峰</text>
+
+          <!-- TROUGH label -->
+          <circle cx="405" cy="180" r="4" fill="#c084fc"/>
+          <text x="415" y="184" fill="#c084fc" font-size="11" font-family="Space Mono">Trough 波谷</text>
+
+          <!-- REST label -->
+          <text x="35" y="96" fill="rgba(226,234,248,0.35)" font-size="10" font-family="Space Mono">rest position</text>
+          <text x="35" y="108" fill="rgba(226,234,248,0.35)" font-size="9" font-family="Space Mono">静止位置</text>
+
+          <!-- Arrowhead defs -->
+          <defs>
+            <marker id="arrowGold" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#fbbf24"/>
+            </marker>
+            <marker id="arrowGoldR" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
+              <path d="M0,0 L0,6 L8,3 z" fill="#fbbf24"/>
+            </marker>
+            <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#4ade80"/>
+            </marker>
+            <marker id="arrowGreenR" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
+              <path d="M0,0 L0,6 L8,3 z" fill="#4ade80"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="wave-label-row">
+        <div class="wave-label-pill" onclick="showWaveInfo('amplitude')">
+          Amplitude <span class="cn">振幅</span>
+        </div>
+        <div class="wave-label-pill" onclick="showWaveInfo('wavelength')">
+          Wavelength <span class="cn">波长</span>
+        </div>
+        <div class="wave-label-pill" onclick="showWaveInfo('frequency')">
+          Frequency <span class="cn">频率</span>
+        </div>
+        <div class="wave-label-pill" onclick="showWaveInfo('period')">
+          Period <span class="cn">周期</span>
+        </div>
+        <div class="wave-label-pill" onclick="showWaveInfo('crest')">
+          Crest &amp; Trough <span class="cn">波峰与波谷</span>
+        </div>
+      </div>
+
+      <div class="wave-info-box" id="waveInfoBox">
+        <div class="wi-term" id="wiTerm"></div>
+        <div class="wi-cn" id="wiCN"></div>
+        <div class="wi-def" id="wiDef"></div>
+        <div class="wi-def-cn" id="wiDefCN"></div>
+      </div>
+
+      <!-- Longitudinal wave -->
+      <div style="margin-top:30px;">
+        <div class="diagram-title">Longitudinal Wave (Sound) — 纵波（声音）</div>
+        <div class="diagram-subtitle" style="margin-bottom:14px;">Compressions (密) and rarefactions (疏) travel in the same direction as the wave · 压缩区和稀疏区沿波的传播方向移动</div>
+        <svg viewBox="0 0 700 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:400px;height:auto;display:block;">
+          <!-- Long wave particles as vertical bars of varying spacing -->
+          <!-- Compression region 1 -->
+          <g fill="rgba(56,189,248,0.7)">
+            <rect x="60" y="30" width="3" height="40" rx="1"/>
+            <rect x="68" y="30" width="3" height="40" rx="1"/>
+            <rect x="76" y="30" width="3" height="40" rx="1"/>
+            <rect x="84" y="30" width="3" height="40" rx="1"/>
+            <rect x="92" y="30" width="3" height="40" rx="1"/>
+          </g>
+          <!-- Rarefaction 1 -->
+          <g fill="rgba(56,189,248,0.35)">
+            <rect x="110" y="30" width="3" height="40" rx="1"/>
+            <rect x="126" y="30" width="3" height="40" rx="1"/>
+            <rect x="142" y="30" width="3" height="40" rx="1"/>
+            <rect x="158" y="30" width="3" height="40" rx="1"/>
+          </g>
+          <!-- Compression 2 -->
+          <g fill="rgba(56,189,248,0.7)">
+            <rect x="175" y="30" width="3" height="40" rx="1"/>
+            <rect x="183" y="30" width="3" height="40" rx="1"/>
+            <rect x="191" y="30" width="3" height="40" rx="1"/>
+            <rect x="199" y="30" width="3" height="40" rx="1"/>
+            <rect x="207" y="30" width="3" height="40" rx="1"/>
+          </g>
+          <!-- Rarefaction 2 -->
+          <g fill="rgba(56,189,248,0.35)">
+            <rect x="225" y="30" width="3" height="40" rx="1"/>
+            <rect x="241" y="30" width="3" height="40" rx="1"/>
+            <rect x="257" y="30" width="3" height="40" rx="1"/>
+            <rect x="273" y="30" width="3" height="40" rx="1"/>
+          </g>
+          <!-- Compression 3 -->
+          <g fill="rgba(56,189,248,0.7)">
+            <rect x="290" y="30" width="3" height="40" rx="1"/>
+            <rect x="298" y="30" width="3" height="40" rx="1"/>
+            <rect x="306" y="30" width="3" height="40" rx="1"/>
+            <rect x="314" y="30" width="3" height="40" rx="1"/>
+            <rect x="322" y="30" width="3" height="40" rx="1"/>
+          </g>
+          <!-- Rarefaction 3 -->
+          <g fill="rgba(56,189,248,0.35)">
+            <rect x="340" y="30" width="3" height="40" rx="1"/>
+            <rect x="356" y="30" width="3" height="40" rx="1"/>
+            <rect x="372" y="30" width="3" height="40" rx="1"/>
+            <rect x="388" y="30" width="3" height="40" rx="1"/>
+          </g>
+          <!-- Labels -->
+          <text x="75" y="20" fill="#38bdf8" font-size="11" font-family="Space Mono" text-anchor="middle">Compression</text>
+          <text x="75" y="10" fill="rgba(56,189,248,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">压缩区</text>
+          <text x="135" y="20" fill="rgba(56,189,248,0.55)" font-size="11" font-family="Space Mono" text-anchor="middle">Rarefaction</text>
+          <text x="135" y="10" fill="rgba(56,189,248,0.4)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">稀疏区</text>
+          <!-- Arrow direction -->
+          <text x="450" y="55" fill="#fbbf24" font-size="11" font-family="Space Mono">Energy →</text>
+          <text x="450" y="70" fill="rgba(251,191,36,0.6)" font-size="10" font-family="Noto Sans SC">能量传播方向 →</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ EM SPECTRUM ══════════ -->
+  <div class="section" id="section-em">
+    <div class="section-title">Electromagnetic Spectrum</div>
+    <div class="section-cn">电磁波谱 — Click each type to see its uses and dangers · 点击每种类型查看其用途和危害</div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px; margin-top:18px;">
+      <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--muted); font-family:'Space Mono',monospace; margin-bottom:6px;">
+        <span>← Long wavelength 长波长 · Low frequency 低频率 · Low energy 低能量</span>
+        <span>Short wavelength 短波长 · High frequency 高频率 · High energy 高能量 →</span>
+      </div>
+
+      <div class="em-spectrum-bar" id="emBar">
+        <div class="em-seg" style="background:#d4145a;" onclick="showEM('radio')">
+          <span class="seg-label">Radio<br/>无线电波</span>
+        </div>
+        <div class="em-seg" style="background:#6d28d9;" onclick="showEM('microwave')">
+          <span class="seg-label">Micro<br/>wave<br/>微波</span>
+        </div>
+        <div class="em-seg" style="background:#dc2626;" onclick="showEM('infrared')">
+          <span class="seg-label">Infra<br/>red<br/>红外线</span>
+        </div>
+        <div class="em-seg" style="background:linear-gradient(90deg,#ef4444,#f97316,#eab308,#22c55e,#3b82f6,#6366f1);" onclick="showEM('visible')">
+          <span class="seg-label">Visible<br/>可见光</span>
+        </div>
+        <div class="em-seg" style="background:#7c3aed;" onclick="showEM('uv')">
+          <span class="seg-label">Ultra<br/>violet<br/>紫外线</span>
+        </div>
+        <div class="em-seg" style="background:#1d4ed8;color:rgba(255,255,255,0.85);" onclick="showEM('xray')">
+          <span class="seg-label">X-rays<br/>X射线</span>
+        </div>
+        <div class="em-seg" style="background:#0f172a;border:1px solid rgba(99,102,241,0.5);color:rgba(200,200,255,0.9);" onclick="showEM('gamma')">
+          <span class="seg-label">Gamma<br/>伽马射线</span>
+        </div>
+      </div>
+
+      <div style="text-align:center; font-size:0.75rem; color:var(--muted); margin-top:8px; font-family:'Space Mono',monospace;">
+        ↑ Click any segment · 点击任意部分
+      </div>
+
+      <div class="em-info-panel" id="emInfoPanel">
+        <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;">
+          <div id="emName" style="font-family:'Orbitron',sans-serif; font-size:1.1rem; color:var(--em-gold);"></div>
+          <div id="emNameCN" style="font-size:1rem; color:var(--text);"></div>
+          <div id="emPinyin" style="font-size:0.75rem; color:var(--muted); font-style:italic;"></div>
+        </div>
+        <div id="emDesc" style="font-size:0.84rem; color:rgba(226,234,248,0.8); margin:10px 0 4px; line-height:1.6;"></div>
+        <div id="emDescCN" style="font-size:0.82rem; color:rgba(56,189,248,0.7); line-height:1.7; margin-bottom:12px;"></div>
+        <div class="em-info-grid">
+          <div class="em-info-cell">
+            <div class="em-info-cell-title">✅ USES 用途</div>
+            <div id="emUses" style="font-size:0.82rem; color:rgba(226,234,248,0.8); line-height:1.7;"></div>
+            <div id="emUsesCN" style="font-size:0.8rem; color:rgba(56,189,248,0.6); line-height:1.7; margin-top:5px;"></div>
+          </div>
+          <div class="em-info-cell">
+            <div class="em-info-cell-title">⚠️ DANGERS 危害</div>
+            <div id="emDangers" style="font-size:0.82rem; color:rgba(248,113,113,0.9); line-height:1.7;"></div>
+            <div id="emDangersCN" style="font-size:0.8rem; color:rgba(248,113,113,0.6); line-height:1.7; margin-top:5px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ EQUATIONS ══════════ -->
+  <div class="section" id="section-equations">
+    <div class="section-title">Equations</div>
+    <div class="section-cn">公式 — AQA Foundation: two equations for Waves · 两个波的公式</div>
+
+    <div style="background:rgba(74,222,128,0.07); border:1px solid rgba(74,222,128,0.2); border-radius:10px; padding:12px 18px; margin-bottom:18px; font-size:0.82rem; color:rgba(226,234,248,0.65); line-height:1.6;">
+      📋 <span style="color:var(--safe-green); font-weight:bold;">Foundation Tier Equations:</span>
+      <span style="background:rgba(248,113,113,0.15); border:1px solid rgba(248,113,113,0.3); color:var(--danger-red); font-family:'Space Mono',monospace; font-size:0.68rem; padding:2px 7px; border-radius:8px; margin:0 4px;">MUST RECALL</span> = memorise it.
+      <span style="background:rgba(74,222,128,0.12); border:1px solid rgba(74,222,128,0.25); color:var(--safe-green); font-family:'Space Mono',monospace; font-size:0.68rem; padding:2px 7px; border-radius:8px; margin:0 4px;">GIVEN</span> = provided on the equation sheet in the exam.
+      <br>必须记忆的公式 vs 考试时提供的公式。
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-name">Wave Equation 波动方程 <span class="eq-badge recall">MUST RECALL</span></div>
+      <div class="eq-name-cn">计算波速——这是你必须记住的公式 · AQA 4.6.1.2</div>
+      <div class="eq-formula">v = f × λ</div>
+      <div class="eq-vars">
+        <span>v</span> = wave speed 波速 (m/s)<br>
+        <span>f</span> = frequency 频率 (Hz)<br>
+        <span>λ</span> = wavelength 波长 (m)
+      </div>
+      <div class="worked-ex">
+        <div class="we-title">WORKED EXAMPLE 解题示例</div>
+        <div class="we-body">
+          A radio wave has frequency 98 MHz and wavelength 3.06 m. Calculate wave speed.<br>
+          <span class="step">v = f × λ = 98 × 10⁶ × 3.06 = 3 × 10⁸ m/s ✓</span>
+        </div>
+        <div class="we-cn">一个无线电波频率为98 MHz，波长为3.06 m。计算波速。<br>v = f × λ = 98 × 10⁶ × 3.06 = 3 × 10⁸ m/s</div>
+      </div>
+    </div>
+
+    <div class="eq-card">
+      <div class="eq-name">Period–Frequency Equation 周期–频率方程 <span class="eq-badge given">GIVEN</span></div>
+      <div class="eq-name-cn">周期与频率的关系——考试时会提供，但要理解它 · AQA 4.6.1.2</div>
+      <div class="eq-formula">T = 1 / f</div>
+      <div class="eq-vars">
+        <span>T</span> = period 周期 (s, seconds 秒)<br>
+        <span>f</span> = frequency 频率 (Hz)
+      </div>
+      <div class="worked-ex">
+        <div class="we-title">WORKED EXAMPLE 解题示例</div>
+        <div class="we-body">
+          A wave has a frequency of 50 Hz. Calculate the period.<br>
+          <span class="step">T = 1/f = 1/50 = 0.02 s</span>
+        </div>
+        <div class="we-cn">一个波的频率为50 Hz。计算周期。<br>T = 1/f = 1/50 = 0.02 s</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ GLOSSARY ══════════ -->
+  <div class="section" id="section-glossary">
+    <div class="section-title">Full Glossary</div>
+    <div class="section-cn">完整词汇表 — Search in English or Chinese · 用英文或中文搜索</div>
+    <input type="text" class="search-box" id="glossarySearch" placeholder="Search / 搜索..." oninput="filterGlossary()">
+    <table class="glossary-table">
+      <thead><tr><th>English Term</th><th>中文 / Pinyin</th><th>Definition 定义</th></tr></thead>
+      <tbody id="glossaryBody"></tbody>
+    </table>
+  </div>
+
+  <!-- ══════════ QUIZ ══════════ -->
+  <div class="section" id="section-quiz">
+    <div class="section-title">Revision Quiz</div>
+    <div class="section-cn">复习测验 — 10 questions on AQA Foundation Waves · 10道AQA基础波题</div>
+    <div class="quiz-container">
+      <div id="quizActive">
+        <div class="quiz-progress">
+          <div class="progress-text" id="qProgress">Q1 / 10</div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:10%"></div></div>
+          <div class="score-display" id="scoreDisplay">Score: 0</div>
+        </div>
+        <div class="question-box">
+          <div class="question-text" id="questionText"></div>
+          <div class="question-cn" id="questionCN"></div>
+        </div>
+        <div class="options-grid" id="optionsGrid"></div>
+        <div class="feedback-box" id="feedbackBox"></div>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question → 下一题</button>
+      </div>
+      <div class="quiz-result" id="quizResult">
+        <div class="result-score" id="resultScore"></div>
+        <div class="result-msg" id="resultMsg"></div>
+        <div class="result-cn" id="resultCN"></div>
+        <button class="restart-btn" onclick="restartQuiz()">Restart Quiz 重新开始</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ══ NAVIGATION ══
+function showTab(e, id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
+
+// ══ CARDS ══
+function toggleCard(card) { card.classList.toggle('expanded'); }
+
+// ══ WAVE INFO ══
+const waveInfoData = {
+  amplitude: {
+    term:'Amplitude', cn:'振幅', pinyin:'zhèn fú',
+    def:'The maximum displacement of a point on a wave from its undisturbed (rest) position. It determines how much energy the wave carries — a larger amplitude means more energy.',
+    defCN:'波上某点从其静止位置的最大位移。它决定了波携带多少能量——振幅越大，能量越多。'
+  },
+  wavelength: {
+    term:'Wavelength (λ)', cn:'波长', pinyin:'bō cháng',
+    def:'The distance from a point on one wave to the equivalent point on the next wave (e.g. crest to crest, or trough to trough). Symbol: λ (lambda). Unit: metres (m).',
+    defCN:'从一个波上某点到下一个波上对应点的距离（如波峰到波峰）。符号：λ（拉姆达）。单位：米（m）。'
+  },
+  frequency: {
+    term:'Frequency (f)', cn:'频率', pinyin:'pín lǜ',
+    def:'The number of complete waves passing a point per second. Measured in Hertz (Hz). Higher frequency = more waves per second = shorter wavelength (for the same wave speed).',
+    defCN:'每秒通过某点的完整波的数量。单位：赫兹（Hz）。频率越高 = 每秒波数越多 = 波长越短（在相同波速下）。'
+  },
+  period: {
+    term:'Period (T)', cn:'周期', pinyin:'zhōu qī',
+    def:'The time for one complete wave to pass a point. Measured in seconds (s). Linked to frequency by: T = 1/f. So a frequency of 10 Hz means a period of 0.1 s.',
+    defCN:'一个完整的波通过某点的时间。单位：秒（s）。与频率的关系：T = 1/f。因此频率10 Hz意味着周期0.1 s。'
+  },
+  crest: {
+    term:'Crest & Trough', cn:'波峰与波谷', pinyin:'bō fēng yǔ bō gǔ',
+    def:'A crest is the highest point of a transverse wave. A trough is the lowest point. The distance from the rest position to the crest (or trough) is the amplitude.',
+    defCN:'波峰是横波的最高点。波谷是最低点。从静止位置到波峰（或波谷）的距离是振幅。'
+  }
+};
+
+function showWaveInfo(key) {
+  const d = waveInfoData[key];
+  document.querySelectorAll('.wave-label-pill').forEach(p => p.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('wiTerm').textContent = d.term;
+  document.getElementById('wiCN').textContent = d.cn + ' (' + d.pinyin + ')';
+  document.getElementById('wiDef').textContent = d.def;
+  document.getElementById('wiDefCN').textContent = d.defCN;
+  const box = document.getElementById('waveInfoBox');
+  box.classList.add('show');
+}
+
+// ══ EM SPECTRUM ══
+const emData = {
+  radio: {
+    name:'Radio Waves', cn:'无线电波', py:'wú xiàn diàn bō',
+    desc:'The longest wavelength, lowest frequency EM waves. They can travel very long distances and pass through walls.',
+    descCN:'波长最长、频率最低的电磁波。能传播很远的距离，可穿过墙壁。',
+    uses:'Broadcasting (TV, radio), communications, MRI scanners in hospitals.',
+    usesCN:'广播（电视、收音机）、通信、医院的核磁共振扫描仪。',
+    dangers:'Generally considered safe at low intensities. High-intensity radio waves can heat body tissue.',
+    dangersCN:'低强度下通常认为是安全的。高强度无线电波可以加热身体组织。'
+  },
+  microwave: {
+    name:'Microwaves', cn:'微波', py:'wēi bō',
+    desc:'Shorter wavelength than radio waves. Absorbed by water molecules in food — used in microwave ovens.',
+    descCN:'波长比无线电波短。被食物中的水分子吸收——用于微波炉。',
+    uses:'Cooking food (microwave ovens), mobile phone signals, satellite communications.',
+    usesCN:'烹饪食物（微波炉）、手机信号、卫星通信。',
+    dangers:'Can heat body tissue internally (especially eyes and testes which cannot cool easily). Used safely at controlled intensities.',
+    dangersCN:'可以在体内加热组织（特别是眼睛和睾丸，这些部位不易散热）。在受控强度下可以安全使用。'
+  },
+  infrared: {
+    name:'Infrared (IR)', cn:'红外线', py:'hóng wài xiàn',
+    desc:'Emitted by all objects with temperature. The hotter the object, the more IR it emits. Felt as heat.',
+    descCN:'所有有温度的物体都会发出红外线。物体越热，发出的红外线越多。感受为热量。',
+    uses:'Thermal imaging cameras, TV remotes, optical fibre communications, electric heaters, night-vision.',
+    usesCN:'热成像相机、电视遥控器、光纤通信、电热器、夜视仪。',
+    dangers:'Excessive exposure can cause skin burns and eye damage.',
+    dangersCN:'过度暴露可能导致皮肤灼伤和眼睛损伤。'
+  },
+  visible: {
+    name:'Visible Light', cn:'可见光', py:'kě jiàn guāng',
+    desc:'The only part of the EM spectrum detected by human eyes. Ranges from red (longest wavelength) to violet (shortest wavelength).',
+    descCN:'电磁波谱中唯一能被人眼探测到的部分。从红色（波长最长）到紫色（波长最短）。',
+    uses:'Vision, photography, optical fibres, lasers, lighting.',
+    usesCN:'视觉、摄影、光纤、激光、照明。',
+    dangers:'Intense visible light (e.g. lasers) can damage the retina.',
+    dangersCN:'强烈的可见光（如激光）可损伤视网膜。'
+  },
+  uv: {
+    name:'Ultraviolet (UV)', cn:'紫外线', py:'zǐ wài xiàn',
+    desc:'Higher frequency than visible light. Causes fluorescence (some materials glow under UV). Produced by the Sun.',
+    descCN:'频率高于可见光。可引起荧光现象（某些材料在紫外线下会发光）。由太阳产生。',
+    uses:'Security markings (fluorescent ink), sterilising medical equipment, tanning beds, detecting forged banknotes.',
+    usesCN:'安全标记（荧光墨水）、医疗设备消毒、日光浴床、检测伪钞。',
+    dangers:'Can cause sunburn, premature skin aging and skin cancer. Can damage eyes (cataracts). Ionising at higher frequencies.',
+    dangersCN:'可引起晒伤、皮肤过早老化和皮肤癌。可损伤眼睛（白内障）。在较高频率下具有电离性。'
+  },
+  xray: {
+    name:'X-rays', cn:'X射线', py:'X shè xiàn',
+    desc:'Very short wavelength, high frequency and high energy. Pass through soft tissue but are absorbed by dense materials like bone and metal.',
+    descCN:'波长极短、频率高、能量高。可穿过软组织，但被骨骼和金属等致密材料吸收。',
+    uses:'Medical imaging (broken bones, chest X-rays), airport security scanners, checking welds in industry.',
+    usesCN:'医学成像（骨折、胸部X光）、机场安全扫描仪、工业焊缝检测。',
+    dangers:'Ionising radiation — can damage or kill cells, cause mutations and cancer. Medical use is carefully controlled.',
+    dangersCN:'电离辐射——可损伤或杀死细胞，引起突变和癌症。医疗使用受到严格控制。'
+  },
+  gamma: {
+    name:'Gamma Rays', cn:'伽马射线', py:'jiā mǎ shè xiàn',
+    desc:'The highest frequency, shortest wavelength EM waves. Produced by radioactive decay and nuclear reactions. Highly penetrating.',
+    descCN:'频率最高、波长最短的电磁波。由放射性衰变和核反应产生。穿透力极强。',
+    uses:'Treating cancer (radiotherapy), sterilising medical equipment and food, detecting cancer (gamma cameras in hospitals).',
+    usesCN:'治疗癌症（放射治疗）、消毒医疗设备和食品、检测癌症（医院中的伽马相机）。',
+    dangers:'Highly ionising — can damage DNA, cause cancer and radiation sickness. Requires lead or thick concrete shielding.',
+    dangersCN:'高度电离——可损伤DNA，引起癌症和辐射病。需要铅或厚混凝土屏蔽。'
+  }
+};
+
+function showEM(key) {
+  const d = emData[key];
+  document.querySelectorAll('.em-seg').forEach(s => s.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('emName').textContent = d.name;
+  document.getElementById('emNameCN').textContent = d.cn;
+  document.getElementById('emPinyin').textContent = d.py;
+  document.getElementById('emDesc').textContent = d.desc;
+  document.getElementById('emDescCN').textContent = d.descCN;
+  document.getElementById('emUses').textContent = d.uses;
+  document.getElementById('emUsesCN').textContent = d.usesCN;
+  document.getElementById('emDangers').textContent = d.dangers;
+  document.getElementById('emDangersCN').textContent = d.dangersCN;
+  const panel = document.getElementById('emInfoPanel');
+  panel.classList.add('show');
+}
+
+// ══ GLOSSARY ══
+const glossaryData = [
+  {en:'Transverse Wave', cn:'横波', py:'héng bō', def:'A wave where oscillations are perpendicular to the direction of energy transfer.', defCN:'振动方向与能量传播方向垂直的波。'},
+  {en:'Longitudinal Wave', cn:'纵波', py:'zòng bō', def:'A wave where oscillations are parallel to the direction of energy transfer.', defCN:'振动方向与能量传播方向平行的波。'},
+  {en:'Amplitude', cn:'振幅', py:'zhèn fú', def:'Maximum displacement of a point on a wave from its rest position.', defCN:'波上某点从静止位置的最大位移。'},
+  {en:'Wavelength', cn:'波长', py:'bō cháng', def:'Distance from one point on a wave to the equivalent point on the next wave. Symbol: λ', defCN:'从一个波上某点到下一个波上对应点的距离。符号：λ'},
+  {en:'Frequency', cn:'频率', py:'pín lǜ', def:'Number of complete waves passing a point per second. Unit: Hertz (Hz).', defCN:'每秒通过某点的完整波的数量。单位：赫兹（Hz）。'},
+  {en:'Period', cn:'周期', py:'zhōu qī', def:'Time for one complete wave to pass a point. T = 1/f. Unit: seconds (s).', defCN:'一个完整的波通过某点的时间。T = 1/f。单位：秒（s）。'},
+  {en:'Wave Speed', cn:'波速', py:'bō sù', def:'The speed at which energy is transferred by a wave. v = f × λ. Unit: m/s.', defCN:'波传递能量的速度。v = f × λ。单位：m/s。'},
+  {en:'Compression', cn:'压缩区', py:'yā suō qū', def:'Region in a longitudinal wave where particles are pushed together (high pressure).', defCN:'纵波中粒子被压缩在一起的区域（高压）。'},
+  {en:'Rarefaction', cn:'稀疏区', py:'xī shū qū', def:'Region in a longitudinal wave where particles are spread apart (low pressure).', defCN:'纵波中粒子分散开来的区域（低压）。'},
+  {en:'Reflection', cn:'反射', py:'fǎn shè', def:'When a wave bounces back at a boundary between two materials.', defCN:'波在两种材料的边界处反弹。'},
+  {en:'Absorption', cn:'吸收', py:'xī shōu', def:'When wave energy is taken in by a material at a boundary.', defCN:'波的能量在边界处被材料吸收。'},
+  {en:'Transmission', cn:'透射', py:'tòu shè', def:'When a wave passes through a boundary into a new material.', defCN:'波穿过边界进入新材料。'},
+  {en:'Normal', cn:'法线', py:'fǎ xiàn', def:'An imaginary line perpendicular to a surface at the point where a wave meets it. Angles are measured from the normal.', defCN:'在波与表面相交的点处垂直于表面的假想线。角度从法线量起。'},
+  {en:'Electromagnetic Spectrum', cn:'电磁波谱', py:'diàn cí bō pǔ', def:'The continuous range of all EM waves, ordered by wavelength/frequency: radio, microwave, infrared, visible, ultraviolet, X-rays, gamma rays.', defCN:'所有电磁波的连续范围，按波长/频率排列：无线电波、微波、红外线、可见光、紫外线、X射线、伽马射线。'},
+  {en:'Infrared Radiation', cn:'红外线辐射', py:'hóng wài xiàn fú shè', def:'EM waves emitted by all objects with temperature. Detected as heat.', defCN:'所有有温度的物体发出的电磁波。感受为热量。'},
+  {en:'Ultraviolet (UV)', cn:'紫外线', py:'zǐ wài xiàn', def:'EM waves with higher frequency than visible light. Can cause skin damage and cancer.', defCN:'频率高于可见光的电磁波。可导致皮肤损伤和癌症。'},
+  {en:'X-rays', cn:'X射线', py:'X shè xiàn', def:'High-frequency EM waves that pass through soft tissue but are absorbed by bone. Used in medical imaging.', defCN:'穿过软组织但被骨骼吸收的高频电磁波。用于医学成像。'},
+  {en:'Gamma Rays', cn:'伽马射线', py:'jiā mǎ shè xiàn', def:'The highest frequency EM waves. Produced by radioactive decay. Highly ionising.', defCN:'频率最高的电磁波。由放射性衰变产生。高度电离性。'},
+  {en:'Ionising Radiation', cn:'电离辐射', py:'diàn lí fú shè', def:'Radiation with enough energy to remove electrons from atoms, potentially damaging DNA. Includes UV (high freq), X-rays and gamma rays.', defCN:'具有足够能量从原子中移除电子的辐射，可能损伤DNA。包括紫外线（高频）、X射线和伽马射线。'},
+  {en:'Hertz (Hz)', cn:'赫兹', py:'hè zī', def:'The unit of frequency. 1 Hz = 1 wave per second.', defCN:'频率的单位。1 Hz = 每秒1个波。'},
+  {en:'Vacuum', cn:'真空', py:'zhēn kōng', def:'A space with no matter. All EM waves travel at 3 x 10^8 m/s through a vacuum.', defCN:'没有物质的空间。所有电磁波在真空中以3×10^8 m/s的速度传播。'},
+  {en:'Ray Diagram', cn:'光路图', py:'guāng lù tú', def:'A diagram using straight lines (rays) to show the path of waves, including angles of incidence and reflection.', defCN:'使用直线（光线）表示波的路径的图，包括入射角和反射角。'},
+];
+
+function populateGlossary(data) {
+  document.getElementById('glossaryBody').innerHTML = data.map(item => `
+    <tr>
+      <td><div class="gl-en">${item.en}</div></td>
+      <td><div class="gl-cn">${item.cn}</div><div class="gl-py">${item.py}</div></td>
+      <td><div class="gl-def">${item.def}</div><div class="gl-def-cn">${item.defCN}</div></td>
+    </tr>
+  `).join('');
+}
+
+function filterGlossary() {
+  const q = document.getElementById('glossarySearch').value.toLowerCase();
+  populateGlossary(glossaryData.filter(item =>
+    item.en.toLowerCase().includes(q) || item.cn.includes(q) ||
+    item.py.toLowerCase().includes(q) || item.def.toLowerCase().includes(q)
+  ));
+}
+
+populateGlossary(glossaryData);
+
+// ══ QUIZ ══
+const quizQuestions = [
+  {q:'In a transverse wave, the oscillations are:', qCN:'在横波中，振动方向是：',
+   opts:[{t:'Parallel to energy transfer 平行于能量传播',c:false},{t:'Perpendicular to energy transfer 垂直于能量传播',c:true},{t:'In a circular pattern 圆形的',c:false},{t:'Random 随机的',c:false}],
+   fb:'Transverse waves have oscillations at 90° (perpendicular) to the direction of energy transfer. Examples: light, water ripples.',
+   fbCN:'横波的振动方向与能量传播方向成90°（垂直）。例子：光、水面波纹。'},
+
+  {q:'Which type of wave is sound travelling through air?', qCN:'声音在空气中传播是哪种类型的波？',
+   opts:[{t:'Transverse 横波',c:false},{t:'Longitudinal 纵波',c:true},{t:'Electromagnetic 电磁波',c:false},{t:'Circular 圆形波',c:false}],
+   fb:'Sound waves in air are longitudinal — the air particles vibrate back and forth in the same direction as the wave travels, creating compressions and rarefactions.',
+   fbCN:'空气中的声波是纵波——空气粒子沿波传播方向来回振动，产生压缩区和稀疏区。'},
+
+  {q:'What is the amplitude of a wave?', qCN:'波的振幅是什么？',
+   opts:[{t:'The distance between two crests 两个波峰之间的距离',c:false},{t:'The number of waves per second 每秒的波数',c:false},{t:'The maximum displacement from rest position 从静止位置的最大位移',c:true},{t:'The speed of the wave 波的速度',c:false}],
+   fb:'Amplitude is the maximum displacement from the undisturbed (rest) position. A larger amplitude means the wave carries more energy.',
+   fbCN:'振幅是从未受扰动（静止）位置的最大位移。振幅越大，波携带的能量越多。'},
+
+  {q:'A wave has frequency 200 Hz and wavelength 1.5 m. What is its speed?', qCN:'一个波的频率为200 Hz，波长为1.5 m。它的速度是多少？',
+   opts:[{t:'133 m/s',c:false},{t:'300 m/s 正确',c:true},{t:'201.5 m/s',c:false},{t:'0.0075 m/s',c:false}],
+   fb:'v = f x wavelength = 200 x 1.5 = 300 m/s. Always use v = f x lambda for wave speed calculations.',
+   fbCN:'v = f × λ = 200 × 1.5 = 300 m/s。波速计算始终使用 v = f × λ。'},
+
+  {q:'Which EM waves have the LONGEST wavelength?', qCN:'哪种电磁波的波长最长？',
+   opts:[{t:'Gamma rays 伽马射线',c:false},{t:'X-rays X射线',c:false},{t:'Radio waves 无线电波',c:true},{t:'Ultraviolet 紫外线',c:false}],
+   fb:'Radio waves have the longest wavelength and lowest frequency. The order from longest to shortest wavelength is: radio, microwave, infrared, visible, ultraviolet, X-rays, gamma.',
+   fbCN:'无线电波具有最长的波长和最低的频率。从最长到最短波长的顺序：无线电波、微波、红外线、可见光、紫外线、X射线、伽马射线。'},
+
+  {q:'What do all electromagnetic waves have in common?', qCN:'所有电磁波的共同点是什么？',
+   opts:[{t:'They all require a medium to travel 都需要介质传播',c:false},{t:'They all travel at 3x10^8 m/s in a vacuum 在真空中都以3×10^8 m/s传播',c:true},{t:'They all have the same wavelength 波长相同',c:false},{t:'They are all longitudinal 都是纵波',c:false}],
+   fb:'All EM waves are transverse waves that travel at 3 x 10^8 m/s in a vacuum (or air). They do NOT need a medium — they can travel through empty space.',
+   fbCN:'所有电磁波都是横波，在真空（或空气）中以3×10^8 m/s传播。它们不需要介质——可以在真空中传播。'},
+
+  {q:'Gamma rays are dangerous because they are:', qCN:'伽马射线危险是因为它们是：',
+   opts:[{t:'Very long wavelength 波长很长',c:false},{t:'Ionising radiation that can damage DNA 能损伤DNA的电离辐射',c:true},{t:'Always too hot 总是太热',c:false},{t:'Visible to the human eye 肉眼可见',c:false}],
+   fb:'Gamma rays are ionising — they have enough energy to knock electrons off atoms, which can damage or mutate DNA, potentially causing cancer.',
+   fbCN:'伽马射线具有电离性——它们有足够的能量从原子中敲出电子，这可能损伤或突变DNA，可能导致癌症。'},
+
+  {q:'When a wave hits a boundary, which THREE things can happen?', qCN:'当波到达边界时，可能发生哪三件事？',
+   opts:[{t:'Reflection, absorption, transmission 反射、吸收、透射',c:true},{t:'Reflection, diffraction, polarisation 反射、衍射、偏振',c:false},{t:'Absorption, fusion, emission 吸收、聚变、发射',c:false},{t:'Transmission, refraction, generation 透射、折射、产生',c:false}],
+   fb:'At a boundary between two materials, waves can be reflected (bounce back), absorbed (energy taken in by the material), or transmitted (pass through). All three are in the AQA spec.',
+   fbCN:'在两种材料的边界处，波可以被反射（反弹）、吸收（能量被材料吸收）或透射（穿过）。三种情况都在AQA规范中。'},
+
+  {q:'A wave has a frequency of 4 Hz. What is its period?', qCN:'一个波的频率为4 Hz。它的周期是多少？',
+   opts:[{t:'4 s',c:false},{t:'0.25 s',c:true},{t:'0.4 s',c:false},{t:'2 s',c:false}],
+   fb:'T = 1/f = 1/4 = 0.25 s. This equation is given on the equation sheet but you need to understand how to use it.',
+   fbCN:'T = 1/f = 1/4 = 0.25 s。这个公式在公式表上给出，但你需要理解如何使用它。'},
+
+  {q:'Which EM wave is used in microwave ovens AND mobile phones?', qCN:'哪种电磁波既用于微波炉又用于手机？',
+   opts:[{t:'Infrared 红外线',c:false},{t:'Radio waves 无线电波',c:false},{t:'Microwaves 微波',c:true},{t:'Ultraviolet 紫外线',c:false}],
+   fb:'Microwaves are used in both microwave ovens (where they are absorbed by water in food, heating it) and in mobile phone communications and satellite communications.',
+   fbCN:'微波既用于微波炉（被食物中的水吸收，加热食物），也用于手机通信和卫星通信。'},
+];
+
+let currentQ = 0, score = 0, answered = false;
+
+function loadQuestion() {
+  const q = quizQuestions[currentQ];
+  document.getElementById('qProgress').textContent = 'Q' + (currentQ+1) + ' / ' + quizQuestions.length;
+  document.getElementById('progressFill').style.width = (((currentQ+1)/quizQuestions.length)*100) + '%';
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('questionCN').textContent = q.qCN;
+  document.getElementById('feedbackBox').className = 'feedback-box';
+  document.getElementById('feedbackBox').innerHTML = '';
+  document.getElementById('nextBtn').className = 'next-btn';
+  answered = false;
+  document.getElementById('optionsGrid').innerHTML = q.opts.map((opt,i) =>
+    '<button class="option-btn" onclick="selectAnswer(this,' + opt.c + ',' + i + ')">' +
+    opt.t + '</button>'
+  ).join('');
+}
+
+function selectAnswer(btn, correct, idx) {
+  if (answered) return;
+  answered = true;
+  const q = quizQuestions[currentQ];
+  document.querySelectorAll('.option-btn').forEach((b,i) => {
+    b.disabled = true;
+    if (quizQuestions[currentQ].opts[i].c) b.classList.add('correct');
+  });
+  const fb = document.getElementById('feedbackBox');
+  if (correct) {
+    score++;
+    btn.classList.add('correct');
+    document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+    fb.className = 'feedback-box correct show';
+    fb.innerHTML = '&#10003; Correct! &#27491;&#30830;&#65281;<br><small>' + q.fb + '</small><br><small style="color:rgba(74,222,128,0.7)">' + q.fbCN + '</small>';
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'feedback-box wrong show';
+    fb.innerHTML = '&#10007; Not quite. &#19981;&#22826;&#23545;&#12290;<br><small>' + q.fb + '</small><br><small style="color:rgba(248,113,113,0.7)">' + q.fbCN + '</small>';
+  }
+  document.getElementById('nextBtn').className = 'next-btn show';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= quizQuestions.length) { showResult(); } else { loadQuestion(); }
+}
+
+function showResult() {
+  document.getElementById('quizActive').style.display = 'none';
+  const res = document.getElementById('quizResult');
+  res.className = 'quiz-result show';
+  const pct = Math.round((score/quizQuestions.length)*100);
+  document.getElementById('resultScore').textContent = score + ' / ' + quizQuestions.length;
+  let msg, cn;
+  if (pct >= 80) { msg = 'Excellent! Outstanding work! &#127775;'; cn = '&#22826;&#26834;&#20102;&#65281;&#25104;&#32489;&#20511;&#31199;&#65281;'; }
+  else if (pct >= 60) { msg = 'Good effort! Keep revising. &#128077;'; cn = '&#24456;&#22909;&#65281;&#32487;&#32493;&#22797;&#32722;&#12290;'; }
+  else { msg = 'Keep practising! &#128170;'; cn = '&#32487;&#32493;&#32451;&#20064;&#65281;'; }
+  document.getElementById('resultMsg').innerHTML = msg;
+  document.getElementById('resultCN').innerHTML = cn;
+}
+
+function restartQuiz() {
+  currentQ = 0; score = 0;
+  document.getElementById('scoreDisplay').textContent = 'Score: 0';
+  document.getElementById('quizActive').style.display = 'block';
+  document.getElementById('quizResult').className = 'quiz-result';
+  loadQuestion();
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
